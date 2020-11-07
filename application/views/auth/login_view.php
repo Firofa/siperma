@@ -25,7 +25,11 @@
                     </div>
                     <div class="form-group">
                       <label>Tahun:</label>
-                      <input type="text" class="form-control form-control-user" id="tahun" name="tahun" placeholder="Masukan Tahun...">
+                      <select name="tahun" class="form-control">
+                        <?php for($i=date("Y")-15; $i <= date("Y"); $i++) { ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                        <?php } ?>
+                      </select>;
                     </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
                       Login

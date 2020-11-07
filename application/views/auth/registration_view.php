@@ -33,7 +33,12 @@
                 </div>
                 <div class="form-group row">
                     <label>Tahun:</label>
-                    <input type="number" class="form-control form-control-user" id="tahun" name="tahun" placeholder="Masukan Tahun Masuk Pegawai..." value="<?= set_value('tahun'); ?>">
+                    <select name="tahun" class="form-control">
+                        <option disabled>Pilih tahun:</option>
+                        <?php for($i=date("Y")-15; $i <= date("Y"); $i++) { ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                        <?php } ?>
+                    </select>
                     <?= form_error('tahun','<small class="text-danger pl-3">','</small>'); ?> 
                 </div>
                 <div class="form-group row">
@@ -55,6 +60,7 @@
                 <div class="form-group row">
                   <label for="level_akses_id">Level Akses:</label>
                   <select class="form-control" id="level_akses_id" name="level_akses_id">
+                    <option disabled>Pilih Level Akses:</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -66,6 +72,7 @@
                 <div class="form-group row">
                   <label for="work_unit_id">Unit Kerja:</label>
                   <select class="form-control" id="work_unit_id" name="work_unit_id">
+                    <option disabled>Pilih Unit Kerja:</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -77,6 +84,7 @@
                 <div class="form-group row">
                   <label for="ruangan_id">Ruangan:</label>
                   <select class="form-control" id="ruangan_id" name="ruangan_id">
+                    <option disabled>Pilih ruangan:</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -92,7 +100,7 @@
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="#">Back to Home</a>
+                <a class="small" href="<?= base_url(); ?>">Back to Home</a>
               </div>
               <div class="text-center">
                 <a class="small" href="#">Back to Admin Menu</a>
