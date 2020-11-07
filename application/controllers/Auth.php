@@ -51,7 +51,13 @@ class Auth extends CI_Controller {
 							'level_access_id'		=> $user['level_access_id'] 
 						];
 						$this->session->set_userdata($data);
-						redirect('user');
+						//Cek Level Akses
+						if($user['level_access_id'] == 1) 
+						{
+								redirect('admin');
+						} else {
+								redirect('user');
+						}
 					} else {
 						$this->session->set_flashdata("message","<div class='alert alert-danger' role='alert'>Wrong Year!</div>");
 						redirect('auth');	

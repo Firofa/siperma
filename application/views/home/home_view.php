@@ -17,9 +17,6 @@
         </div>
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Permintaan Barang</a></li>
-          <li><a href="#">Lihat Permintaan</a></li>
-          <li><a href="#">Chat Admin</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="<?= base_url();?>auth"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
