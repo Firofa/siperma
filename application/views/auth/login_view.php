@@ -13,15 +13,18 @@
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Halaman Login</h1>
+                    <?= $this->session->flashdata('message'); ?>
                   </div>
-                  <form class="user">
+                  <form class="user" method="POST" action="<?= base_url('auth');?>">
                     <div class="form-group">
                       <label>Username: </label>
-                      <input type="text" class="form-control form-control-user" id="email" name="email" placeholder="Masukan Username...">
+                      <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Masukan Username..." value="<?= set_value('username'); ?>">
+                      <?= form_error('username','<small class="text-danger pl-3">','</small>'); ?>
                     </div>
                     <div class="form-group">
                       <label>Password:</label>
                       <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Masukan Password...">
+                      <?= form_error('password','<small class="text-danger pl-3">','</small>'); ?>
                     </div>
                     <div class="form-group">
                       <label>Tahun:</label>
@@ -30,6 +33,7 @@
                         <option value="<?= $i ?>"><?= $i ?></option>
                         <?php } ?>
                       </select>;
+                      <?= form_error('tahun','<small class="text-danger pl-3">','</small>'); ?>
                     </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">
                       Login
