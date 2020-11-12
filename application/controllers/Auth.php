@@ -11,6 +11,7 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
+		$this->_goToDefaultPage();
 		$this->form_validation->set_rules("username","Username","required|trim");
 		$this->form_validation->set_rules("password","Password","required|trim");
 		$this->form_validation->set_rules("tahun","Tahun","required|trim");
@@ -77,8 +78,20 @@ class Auth extends CI_Controller {
 				
 	}
 
+	private function _goToDefaultPage() {
+		//Mengembalikan User sesuai level akses
+		if($this->session->userdata('level_access_id')  == 1) {
+			redirect('admin');
+		} else if($this->session->userdata('level_access_id')  == 2) {
+			redirect('admin');
+		} else if($this->session->userdata('level_access_id')  == 3) {
+			redirect('user');
+		}
+	}
+
 	public function registration()
 	{
+		$this->_goToDefaultPage();
 		$this->form_validation->set_rules("name","Name","required|trim");
 		$this->form_validation->set_rules("nip","NIP","required|trim|numeric");
 		$this->form_validation->set_rules("jabatan","Jabatan","required|trim");
@@ -97,8 +110,17 @@ class Auth extends CI_Controller {
 
 		if($this->form_validation->run() == false) {
 			$data['title'] = 'Registration | SIPERMA';
+			//Mengambil data level akses
+			$this->load->model('Level_access_model','level_akses');
+			$data['level_akses'] = $this->level_akses->GetDataLevel();
+			//Mengambil data ruangan
+			$this->load->model('ruangan_model','ruangan');
+			$data['ruangan'] = $this->ruangan->GetDataRuangan();
+			//Mengambil data work unit
+			$this->load->model('work_unit_model','work_unit');
+			$data['work_unit'] = $this->work_unit->GetDataWorkUnit();
 			$this->load->view('templates/auth_header',$data);
-			$this->load->view('auth/registration_view');
+			$this->load->view('auth/registration_view',$data);
 			$this->load->view('templates/auth_footer');
 		} else {
 			$data = [
@@ -109,7 +131,7 @@ class Auth extends CI_Controller {
 				'tahun' => htmlspecialchars($this->input->post('tahun'),true),
 				'username' => htmlspecialchars($this->input->post('username'),true),
 				'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT),
-				'level_access_id' => htmlspecialchars($this->input->post('level_access_id'),true),
+				'level_access_id' => htmlspecialchars($this->input->post('level_akses_id'),true),
 				'work_unit_id' => htmlspecialchars($this->input->post('work_unit_id'),true),
 				'ruangan_id' => htmlspecialchars($this->input->post('ruangan_id'),true),
 				'is_active' => 1,
@@ -125,7 +147,6 @@ class Auth extends CI_Controller {
 	{
 		$this->session->unset_userdata('username');
 		$this->session->unset_userdata('level_access_id');
-
 		$this->session->set_flashdata('message',"<div class='alert alert-success' role='alert'>You have been logged out.</div>");
 		redirect('auth');
 	}
