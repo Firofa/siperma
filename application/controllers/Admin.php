@@ -161,13 +161,6 @@ class Admin extends CI_Controller {
 	}
 
 	public function pengaturanHakAkses() {
-		$this->form_validation->set_rules("name","Name","required|trim");
-		$this->form_validation->set_rules("nip","NIP","required|trim|numeric");
-		$this->form_validation->set_rules("jabatan","Jabatan","required|trim");
-		$this->form_validation->set_rules("level_akses_id","Level Akses","required|trim");
-		$this->form_validation->set_rules("is_active","Level Akses","required|trim");
-
-		if($this->form_validation->run() == false) {
 		$data['title'] = "Admin Page | SIPERMA";
 		//Ambil data user
 		$this->load->model('User_model','user');
@@ -177,25 +170,54 @@ class Admin extends CI_Controller {
 			$this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/pengaturanHakAkses/index',$data);
-			$this->load->view('templates/admin_footer',$data);
-		} else {
-			$data = [
-				'name' => htmlspecialchars($this->input->post('name'),true),
-				'nip' => htmlspecialchars($this->input->post('nip'),true),
-				'jabatan' => htmlspecialchars($this->input->post('jabatan'),true),
-				'pangkat' => htmlspecialchars($this->input->post('pangkat'),true),
-				'tahun' => htmlspecialchars($this->input->post('tahun'),true),
-				'username' => htmlspecialchars($this->input->post('username'),true),
-				'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT),
-				'level_access_id' => htmlspecialchars($this->input->post('level_akses_id'),true),
-				'work_unit_id' => htmlspecialchars($this->input->post('work_unit_id'),true),
-				'ruangan_id' => htmlspecialchars($this->input->post('ruangan_id'),true),
-				'is_active' => 1,
-				'created_at' => time()
-			];
-			$this->db->insert('users',$data);
-			$this->session->set_flashdata("message","<div class='alert alert-success' role='alert'>Akun berhasil terdaftar.</div>");
-			redirect('admin/pengaturanPegawai');
-		}
+			$this->load->view('templates/admin_footer',$data);				
 	}
+
+	public function editHakAkses($id_users) {
+		$data['title'] = "Admin Page | SIPERMA";
+		//Ambil data user login
+		$this->load->model('User_model','user');
+		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
+		//Mengambil data level akses
+		$this->load->model('Level_access_model','level_akses');
+		$data['level_akses'] = $this->level_akses->GetDataLevel();
+		// Ambil data user yang akan di edit
+		$data['edit_user'] = $this->user->GetDetailUser($id_users);
+		$this->load->view('templates/admin_header',$data);
+		$this->load->view('templates/admin_navbar',$data);
+		$this->load->view('admin/pengaturanHakAkses/editHakAkses',$data);
+		$this->load->view('templates/admin_footer',$data);
+	}
+
+	public function doEditHakAkses() {
+		$id_users = $_POST['id_users'];
+		$level_access_id = $_POST['level_access_id'];
+		$is_active = $_POST['is_active'];
+
+		$data = [
+			'level_access_id' => $level_access_id,
+			'is_active' => $is_active,
+			'updated_at' => time()
+		];
+		$where = ['id_users' => $id_users];
+		$this->load->model('user_model','user');
+		$result = $this->user->UpdateDataUser('users',$data,$where);
+		if($result >= 1) {
+				$this->session->set_flashdata('message', 
+				'<div class="alert alert-dismissible alert-success">
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						Data User Telah Diupdate!
+				</div>');
+				redirect('admin/pengaturanHakAkses');
+			} else {
+				$this->session->set_flashdata('message', 
+				'<div class="alert alert-dismissible alert-danger">
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						Data User Gagal Diupdate
+				</div>');
+				redirect('admin/editHakAkses/'.$id_users);
+			}
+	}
+
+
 }
