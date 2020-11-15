@@ -19,6 +19,38 @@ class User extends CI_Controller {
 		$data['title'] = "User Page | SIPERMA";
 		$this->load->model('User_model','user');
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
+		$data['user']['menu'] = "home";
+		$this->load->view('templates/user_header',$data);
+		$this->load->view('templates/user_navbar',$data);
 		$this->load->view('user/index',$data);
+		$this->load->view('templates/user_footer');
+	}
+	
+	public function permintaanBarang()
+	{
+		$data['title'] = "User Page | SIPERMA";
+		$this->load->model('User_model','user');
+		$this->load->model('Barang_masuk_model','barang');
+		$data['user'] = $this->user->GetDetailUser($this->session->userdata('id_users'));
+		$data['user']['menu'] = "permintaan_barang";
+		$data['barang'] = $this->barang->GetDataBarangMasuk();
+		$this->load->view('templates/user_header',$data);
+		$this->load->view('templates/user_navbar',$data);
+		$this->load->view('user/permintaanBarang',$data);
+	}
+
+	public function tambahPermintaanBarang() {
+		for($count = 0; $count<count($_POST['barang_id']); $count++) {
+			$data = array(
+				'user_id' => $this->input->post('id_user'),
+				'barang_id' => $_POST['hidden_barang_id'][$count],
+				'periode_permintaan' => $this->input->post('periode_permintaan'),
+				'jumlah_permintaan' => $_POST['jumlah_permintaan'][$count],
+				'created_at' => time(),
+				'status_permintaan' => 'Pending'
+			);
+		$this->db->insert('permintaan_barang',$data);
+
+		}
 	}
 }

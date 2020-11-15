@@ -12,7 +12,7 @@
                     <div class="alert alert-danger" role="alert"><?= validation_errors(); ?></div>
                   <?php   endif; ?>
                           <?= $this->session->flashdata('message'); 	 ?>
-                          <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newWorkUnit">Tambah Akun Baru</a>
+                          <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newWorkUnit">Tambah Unit Kerja Baru</a>
           <div class="card-body">
           <div class="table-responsive"> 
           <table class="table table-bordered" id="dataTable">

@@ -48,6 +48,7 @@ class Auth extends CI_Controller {
 					if($tahun == $user['tahun'])
 					{
 						$data =[
+							'id_users'				=> $user['id_users'],
 							'username' 				=> $user['username'],
 							'level_access_id'		=> $user['level_access_id'] 
 						];

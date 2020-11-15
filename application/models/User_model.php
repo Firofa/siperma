@@ -50,4 +50,16 @@ class User_model extends CI_Model {
         $res = $this->db->Update($tableName,$data,$where);
         return $res;
     }
+
+    public function GetDetailDataUsersByName($name) {
+        $data = $this->db->query("SELECT * FROM `users` 
+                                    JOIN `level_access` 
+                                    ON `users`.`level_access_id` = `level_access`.`id_level_access` 
+                                    JOIN `ruangan`
+                                    ON `users`.`ruangan_id` = `ruangan`.`id_ruangan`
+                                    JOIN `work_unit`
+                                    ON `users`.`work_unit_id` = `work_unit`.`id_work_unit` 
+                                    WHERE `users`.`name` = ".$name);
+        return $data->row_array();
+    }
 }
