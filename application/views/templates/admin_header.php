@@ -21,6 +21,9 @@
   <!-- CSS Datatables -->
   <link rel="stylesheet" href="cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">  
 
+  <!-- Custom styles for this page -->
+  <link href="<?= base_url('assets/sbadmin/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">

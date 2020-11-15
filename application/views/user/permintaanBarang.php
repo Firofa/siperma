@@ -9,11 +9,12 @@
                   </div>
                   <div class="form-group">
                       <label for="created_at">Tanggal</label>
-                      <input type="text" class="form-control" id="created_at"  name="created_at" value="<?= Date('d-m-Y',time()); ?>" READONLY>
+                      <input type="text" class="form-control" required id="created_at"  name="created_at" value="<?= Date('d-m-Y',time()); ?>" READONLY>
                   </div>
                   <div class="form-group">
                       <label for="created_at">Permintaan Bulan</label>
                       <input type="date" class="form-control" id="periode_permintaan"  name="periode_permintaan" value="<?= set_value('periode_permintaan'); ?>">
+                      <span id="error_periode_permintaan" class="text-danger"></span>
                   </div>
                   <div class="form-group">
                       <label for="created_at">Nama</label>
@@ -96,23 +97,37 @@
  });
 
  $('#add').click(function(){
-  $('#barang_dialog').dialog('option', 'title', 'Add Data');
-  $('#barang_id').val('');
-  $('#jumlah_permintaan').val('');
-  $('#error_barang_id').text('');
-  $('#error_jumlah_permintaan').text('');
-  $('#barang_id').css('border-color', '');
-  $('#jumlah_permintaan').css('border-color', '');
-  $('#save').text('Save');
-  $('#barang_dialog').dialog('open');
- });
+  var periode_permintaan = '';
+  var error_periode_permintaan = '';
+    if($('#periode_permintaan').val() == '')
+    {
+      error_periode_permintaan = 'Periode Permintaan perlu dipilih';
+      $('#error_periode_permintaan').text(error_periode_permintaan);
+      $('#periode_permintaan').css('border-color', '#cc0000');
+      periode_permintaan = '';
+    } else {
+      error_periode_permintaan = '';
+      $('#error_periode_permintaan').text(error_periode_permintaan);
+      $('#periode_permintaan').css('border-color', '');
+      periode_permintaan = $('#periode_permintaan').val();
+      $('#barang_dialog').dialog('option', 'title', 'Add Data');
+      $('#barang_id').val('');
+      $('#jumlah_permintaan').val('');
+      $('#error_barang_id').text('');
+      $('#error_jumlah_permintaan').text('');
+      $('#barang_id').css('border-color', '');
+      $('#jumlah_permintaan').css('border-color', '');
+      $('#save').text('Save');
+      $('#barang_dialog').dialog('open');
+    }
+  });
 
  $('#save').click(function(){
   var error_barang_id = '';
   var error_jumlah_permintaan = '';
   var barang_id = '';
   var jumlah_permintaan = '';
-  if($('#barang_id').val() == '')
+  if($('#barang_id').val() == '' )
   {
    error_barang_id = 'Jenis barang perlu dipilih';
    $('#error_barang_id').text(error_barang_id);
@@ -129,6 +144,12 @@
   if($('#jumlah_permintaan').val() == '')
   {
    error_jumlah_permintaan = 'Jumlah permintaan perlu diisi';
+   $('#error_jumlah_permintaan').text(error_jumlah_permintaan);
+   $('#jumlah_permintaan').css('border-color', '#cc0000');
+   jumlah_permintaan = '';
+  }
+  else if($('#jumlah_permintaan').val() < 1) {
+   error_jumlah_permintaan = 'Jumlah permintaan minimal 1';
    $('#error_jumlah_permintaan').text(error_jumlah_permintaan);
    $('#jumlah_permintaan').css('border-color', '#cc0000');
    jumlah_permintaan = '';
@@ -214,9 +235,13 @@
     data:form_data,
     success:function(data)
     {
-      console.log(data); 
      $('#data_barang').find("tr:gt(0)").remove();
      $('#action_alert').html('<p>Data Inserted Successfully</p>');
+     $('#action_alert').dialog('open');
+    },
+    error:function(xml,text,error)
+    {
+     $('#action_alert').html('<p>Please Add atleast one data</p>');
      $('#action_alert').dialog('open');
     }
    })

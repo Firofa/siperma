@@ -28,12 +28,17 @@ class User extends CI_Controller {
 	
 	public function permintaanBarang()
 	{
-		$data['title'] = "User Page | SIPERMA";
+		$data['title'] = "Form Permintaan Barang | SIPERMA";
+		//Load model yang diperlukan
 		$this->load->model('User_model','user');
 		$this->load->model('Barang_masuk_model','barang');
+		//Mengambil data user
 		$data['user'] = $this->user->GetDetailUser($this->session->userdata('id_users'));
+		//cek menu
 		$data['user']['menu'] = "permintaan_barang";
+		//Ambil data barang
 		$data['barang'] = $this->barang->GetDataBarangMasuk();
+		//load view
 		$this->load->view('templates/user_header',$data);
 		$this->load->view('templates/user_navbar',$data);
 		$this->load->view('user/permintaanBarang',$data);
@@ -53,5 +58,20 @@ class User extends CI_Controller {
 		$this->db->insert('permintaan_barang',$data);
 
 		}
+	}
+
+	public function lihatPermintaan() {
+		$data['title'] = "Lihat Permintaan Page | SIPERMA";
+		$this->load->model('User_model','user');
+		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
+		$data['user']['menu'] = "lihatPermintaan";
+		//Ambil data Permintaan by User
+		$this->load->model('Permintaan_model','permintaan');
+		$data['permintaan'] = $this->permintaan->GetPermintaanByUser($this->session->userdata('id_users'),$data['user']['ruangan_id']);
+		//load view
+		$this->load->view('templates/user_header',$data);
+		$this->load->view('templates/user_navbar',$data);
+		$this->load->view('user/lihatPermintaan',$data);
+		$this->load->view('templates/user_footer');
 	}
 }

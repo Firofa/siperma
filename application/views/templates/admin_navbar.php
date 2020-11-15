@@ -78,7 +78,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Transaction:</h6>
             <a class="collapse-item" href="<?= base_url('BarangMasuk'); ?>">Barang Persediaan Masuk</a>
-            <a class="collapse-item" href="#">Permintaan Barang</a>
+            <a class="collapse-item" href="<?= base_url('PermintaanBarang'); ?>">Permintaan Barang</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Report:</h6>
             <a class="collapse-item" href="404.html">Laporan Barang Masuk</a>
