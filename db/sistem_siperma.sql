@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 5.0.3
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2020 at 12:32 AM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- Generation Time: Nov 15, 2020 at 07:00 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -32,10 +33,18 @@ CREATE TABLE `barang_masuk` (
   `jumlah_barang_masuk` int(255) NOT NULL,
   `harga_satuan_barang` int(255) NOT NULL,
   `total_harga` int(255) NOT NULL,
-  `nota_barang_masuk` int(255) NOT NULL,
-  `created_at` time NOT NULL,
-  `updated_at` time DEFAULT NULL
+  `nota_barang_masuk` varchar(255) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barang_masuk`
+--
+
+INSERT INTO `barang_masuk` (`id_barang_masuk`, `nama_barang_masuk`, `jumlah_barang_masuk`, `harga_satuan_barang`, `total_harga`, `nota_barang_masuk`, `created_at`, `updated_at`) VALUES
+(3, 'Alat Tulis Kantor', 10, 50000, 500000, '10 ATK', 1605191269, 1605191269),
+(4, 'Laptop', 2, 3000000, 15000000, '5 Laptop', 1605191329, 1605191329);
 
 -- --------------------------------------------------------
 
@@ -53,10 +62,9 @@ CREATE TABLE `level_access` (
 --
 
 INSERT INTO `level_access` (`id_level_access`, `access_level`) VALUES
-(1, 'Super_Admin'),
-(2, 'Admin_1'),
-(3, 'Admin_2'),
-(4, 'Pengguna');
+(1, 'Admin PJ'),
+(2, 'Admin Barang'),
+(3, 'Pegawai');
 
 -- --------------------------------------------------------
 
@@ -68,10 +76,25 @@ CREATE TABLE `permintaan_barang` (
   `id_permintaan_barang` int(255) NOT NULL,
   `user_id` int(255) NOT NULL,
   `barang_id` int(255) NOT NULL,
-  `periode_permintaan` time NOT NULL,
-  `created_at` time NOT NULL,
-  `status_permintaan` varchar(255) NOT NULL
+  `periode_permintaan` varchar(128) NOT NULL,
+  `jumlah_permintaan` int(11) NOT NULL,
+  `created_at` int(11) NOT NULL,
+  `status_permintaan` enum('Disetujui','Ditolak','Pending','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `permintaan_barang`
+--
+
+INSERT INTO `permintaan_barang` (`id_permintaan_barang`, `user_id`, `barang_id`, `periode_permintaan`, `jumlah_permintaan`, `created_at`, `status_permintaan`) VALUES
+(1, 6, 3, '2010-12-12', 1, 1605403526, 'Disetujui'),
+(2, 6, 4, '2010-12-12', 2, 1605403526, 'Ditolak'),
+(3, 6, 4, '2020-12-15', 2, 1605403936, 'Disetujui'),
+(4, 6, 3, '2020-12-15', 5, 1605403936, 'Ditolak'),
+(5, 6, 3, '2020-10-14', 12, 1605404079, 'Disetujui'),
+(6, 6, 4, '2020-10-08', 1, 1605404437, 'Disetujui'),
+(7, 6, 4, '2020-11-11', 12, 1605404944, 'Pending'),
+(9, 6, 4, '2020-11-10', 6, 1605434925, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -89,8 +112,8 @@ CREATE TABLE `ruangan` (
 --
 
 INSERT INTO `ruangan` (`id_ruangan`, `ruangan`) VALUES
-(1, 'A'),
-(2, 'B');
+(1, 'Ruangan A'),
+(2, 'Ruangan B');
 
 -- --------------------------------------------------------
 
@@ -111,16 +134,19 @@ CREATE TABLE `users` (
   `ruangan_id` int(255) NOT NULL,
   `pangkat` varchar(255) NOT NULL,
   `is_active` int(11) NOT NULL,
-  `created_at` int(11) NOT NULL
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_users`, `name`, `password`, `level_access_id`, `username`, `tahun`, `work_unit_id`, `nip`, `jabatan`, `ruangan_id`, `pangkat`, `is_active`, `created_at`) VALUES
-(3, 'Super Admin', '$2y$10$86T5YoHaUTSymeyT05zW1erHNeerx7nFwair3CY..UnnXnZydtYvm', 1, 'superadmin123', 2020, 1, '123456789', 'Super Admin', 1, 'Super Admin', 1, 1604766884),
-(4, 'admin suradmin', '$2y$10$trhDRJtGgO6Ujjxp8VcYP.Vk.8iJ44vBbns9Qg92mUpmnsLw9jk3W', 1, 'admin123456', 2020, 1, '123654123', 'Admin Barang', 1, 'Eselon', 1, 1604767481);
+INSERT INTO `users` (`id_users`, `name`, `password`, `level_access_id`, `username`, `tahun`, `work_unit_id`, `nip`, `jabatan`, `ruangan_id`, `pangkat`, `is_active`, `created_at`, `updated_at`) VALUES
+(3, 'Super Admin', '$2y$10$86T5YoHaUTSymeyT05zW1erHNeerx7nFwair3CY..UnnXnZydtYvm', 1, 'superadmin123', 2020, 1, '123456789', 'Super Admin', 1, 'Super Admin', 1, 1604766884, 1605177061),
+(4, 'admin suradmin', '$2y$10$trhDRJtGgO6Ujjxp8VcYP.Vk.8iJ44vBbns9Qg92mUpmnsLw9jk3W', 2, 'admin123456', 2020, 1, '123654123', 'Admin Barang', 1, 'Eselon', 1, 1604767481, 1605452064),
+(6, 'Asep Sutarman', '$2y$10$gZeDALx/NxtNovC22AG6u.HsjJR/IIwhGDu7XC6Od.tZQ0omuIvvO', 3, 'pengguna123', 2020, 1, '10904032', 'Pegawai', 1, 'Eselon 1', 1, 1605150941, 1605177033),
+(8, 'Entis Sutisna', '$2y$10$VeTwRTEYp86R3kVL/9Kco.UMYYPTmb5blTRJJJMDFRLKcQPCw0W6W', 3, 'karyawan123', 2020, 2, '10104012', 'Staff', 2, 'Karyawan', 1, 1605156707, 0);
 
 -- --------------------------------------------------------
 
@@ -146,8 +172,10 @@ CREATE TABLE `work_unit` (
 --
 
 INSERT INTO `work_unit` (`id_work_unit`, `work_unit`, `kode_satker`, `alamat`, `no_telp`, `ketua`, `wakil_ketua`, `sekretaris`, `pj_barang_persediaan`, `logo_kantor`) VALUES
-(1, 'SDM', '001', 'Kampung Durian Runtuh', '0812313325', 'Dadang Sunandar', 'Asep Alliando', 'Riri Suriri', 'Roku Kutisna', 'logo.jpg'),
-(2, 'Humas', '002', 'Desa Ombak Laut', '08112343647', 'Karim Sukarim', 'Suparman Batiman', 'Entis Sutisna', 'Parto Suparto', 'logo.jpg');
+(1, 'SDM', '001', 'Kampung Durian Runtuh', '0812313325', 'Dadang Sunandar', 'Asep Alliando', 'Riri Suririni', 'Roku Kutisna', 'abc4.jpg'),
+(2, 'Humas', '002', 'Desa Ombak Laut', '08112343647', 'Karim Sukarim', 'Suparman Batiman', 'Entis Sutisna', 'Parto Suparto', 'logo.jpg'),
+(3, 'KEMA', '003', 'Surabaya', '083424332', 'Entis', 'Susi', 'Alfin', 'Syuaib', 'logo.jpg'),
+(4, 'SEKPER', '004', 'Bandung', '082128835432', 'Bayu', 'Billy', 'Rosa', 'Kasino', 'abc1.jpg');
 
 --
 -- Indexes for dumped tables
@@ -203,32 +231,38 @@ ALTER TABLE `work_unit`
 -- AUTO_INCREMENT for table `barang_masuk`
 --
 ALTER TABLE `barang_masuk`
-  MODIFY `id_barang_masuk` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_barang_masuk` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `level_access`
 --
 ALTER TABLE `level_access`
   MODIFY `id_level_access` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `permintaan_barang`
 --
 ALTER TABLE `permintaan_barang`
-  MODIFY `id_permintaan_barang` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_permintaan_barang` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `ruangan`
 --
 ALTER TABLE `ruangan`
-  MODIFY `id_ruangan` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_ruangan` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_users` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_users` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `work_unit`
 --
 ALTER TABLE `work_unit`
-  MODIFY `id_work_unit` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_work_unit` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- Constraints for dumped tables
 --
@@ -247,6 +281,7 @@ ALTER TABLE `users`
   ADD CONSTRAINT `Users_id_level_access-level_access_id_level_access` FOREIGN KEY (`level_access_id`) REFERENCES `level_access` (`id_level_access`),
   ADD CONSTRAINT `Users_id_ruangan-ruangan_id_ruangan` FOREIGN KEY (`ruangan_id`) REFERENCES `ruangan` (`id_ruangan`),
   ADD CONSTRAINT `Users_work_unit_id-work_unit_id_work_unit` FOREIGN KEY (`work_unit_id`) REFERENCES `work_unit` (`id_work_unit`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
