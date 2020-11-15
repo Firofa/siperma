@@ -13,7 +13,7 @@
                   </div>
                   <div class="form-group">
                       <label for="created_at">Permintaan Bulan</label>
-                      <input type="date" class="form-control" id="periode_permintaan"  name="periode_permintaan">
+                      <input type="date" class="form-control" id="periode_permintaan"  name="periode_permintaan" value="<?= set_value('periode_permintaan'); ?>">
                   </div>
                   <div class="form-group">
                       <label for="created_at">Nama</label>
@@ -214,6 +214,7 @@
     data:form_data,
     success:function(data)
     {
+      console.log(data); 
      $('#data_barang').find("tr:gt(0)").remove();
      $('#action_alert').html('<p>Data Inserted Successfully</p>');
      $('#action_alert').dialog('open');

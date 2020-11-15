@@ -40,12 +40,13 @@ class User extends CI_Controller {
 	}
 
 	public function tambahPermintaanBarang() {
-		for($count = 0; $count<count($_POST['barang_id']); $count++) {
+		$a = $this->input->post('hidden_barang_id');
+		for($count = 0; $count<count($a); $count++) {
 			$data = array(
-				'user_id' => $this->input->post('id_user'),
-				'barang_id' => $_POST['hidden_barang_id'][$count],
+				'user_id' => $this->input->post('id_users'),
+				'barang_id' => $a[$count],
 				'periode_permintaan' => $this->input->post('periode_permintaan'),
-				'jumlah_permintaan' => $_POST['jumlah_permintaan'][$count],
+				'jumlah_permintaan' => $_POST['hidden_jumlah_permintaan'][$count],
 				'created_at' => time(),
 				'status_permintaan' => 'Pending'
 			);
