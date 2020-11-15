@@ -20,8 +20,8 @@
 				      	<th scope="col">No</th>
 				      	<th scope="col">Nama</th>
 				      	<th scope="col">Barang</th>
-				      	<th scope="col">Jumlah Permintaan</th>
 				      	<th scope="col">Ruangan yang mengajukan</th>
+				      	<th scope="col">Jumlah Permintaan</th>
                         <th scope="col">Periode</th>
                         <th scope="col">Tanggal Permintaan</th>
                         <th scope="col">Tindak Lanjut</th>
@@ -41,16 +41,18 @@
                             <?php $time = strtotime($p['periode_permintaan']); ?>
                             <?= date("F Y",$time); ?>
                         </td>
-              			<td><?= date('d F Y', $p['created_at']); ?></td>
+              			<td><?= date('d F Y', $p['tanggal_permintaan']); ?></td>
               			<td>
                             <?php if($p['status_permintaan'] == 'Pending') : ?>
-                            <a href="<?= base_url('BarangMasuk/editDataBarang/').$p['id_permintaan_barang'];?>" class="badge badge-success">Validasi</a>
-                            <a href="<?= base_url('BarangMasuk/hapusDataBarang/').$p['id_permintaan_barang'];?>" class="badge badge-danger">Tolak</a>
+                            <a href="<?= base_url('PermintaanBarang/validasi/').$p['id_permintaan_barang'];?>" class="badge badge-success">Validasi</a>
+                            <a href="<?= base_url('PermintaanBarang/tolak/').$p['id_permintaan_barang'];?>" class="badge badge-danger">Tolak</a>
+                            <?php elseif($p['status_permintaan'] == 'Disetujui'): ?>
+                            <p><a href="<?= base_url('PermintaanBarang/cetak/').$p['id_permintaan_barang'];?>" target="_blank" class="badge badge-primary">Cetak Bukti</a></p>
                             <?php else: ?>
                             <p><a href="#" class="badge badge-secondary">Selesai</a></p>
                             <?php endif; ?>
                         </td>
-                        <td><?= $p['status_permintaan']; ?></td>
+                        <td><p style="<?php if($p['status_permintaan'] == 'Disetujui') { echo 'color:green;'; } elseif($p['status_permintaan'] == 'Ditolak') { echo 'color:red;'; }?>"><?= $p['status_permintaan']; ?></p></td>
                         
 				      <?php $i++; ?>
 				    </tr>		

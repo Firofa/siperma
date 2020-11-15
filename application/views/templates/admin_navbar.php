@@ -2,7 +2,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('admin');?>">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-file-alt"></i>
         </div>
@@ -81,15 +81,15 @@
             <a class="collapse-item" href="<?= base_url('PermintaanBarang'); ?>">Permintaan Barang</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Report:</h6>
-            <a class="collapse-item" href="404.html">Laporan Barang Masuk</a>
-            <a class="collapse-item" href="blank.html">Laporan Barang Keluar</a>
+            <a class="collapse-item" href="<?= base_url('laporan');?>">Laporan Barang Masuk</a>
+            <a class="collapse-item" href="<?= base_url('laporan/barangkeluar');?>">Laporan Barang Keluar</a>
           </div>
         </div>
       </li>
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="<?= base_url('petunjuk');?>">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Petunjuk Penggunaan</span></a>
       </li>

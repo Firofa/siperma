@@ -8,7 +8,8 @@ class Barang_masuk_model extends CI_Model {
         return $data->result_array();
     }
     public function GetEditDataBarangMasuk($id_barang_masuk) {
-        $data = $this->db->query("SELECT * FROM `barang_masuk` WHERE `barang_masuk`.`id_barang_masuk` = ".$id_barang_masuk);
+        $data = $this->db->query("SELECT * FROM `barang_masuk` 
+                                WHERE `barang_masuk`.`id_barang_masuk` = ".$id_barang_masuk);
         return $data->row_array();
     }
 
@@ -20,5 +21,11 @@ class Barang_masuk_model extends CI_Model {
     public function DeleteData($tableName, $where) {
 		$res = $this->db->Delete($tableName,$where);
 		return $res;
-	}
+    }
+    
+    public function GetDataBarangMasukById($id_barang_masuk){
+        $data = $this->db->query("SELECT * FROM `barang_masuk` 
+                                 WHERE `barang_masuk`.`id_barang_masuk` = ".$id_barang_masuk);
+        return $data->row_array();
+    }
 }

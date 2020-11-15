@@ -42,6 +42,7 @@
                   <hr>
                   <div class="text-center">
                     <a class="small" href="<?= base_url(); ?>">Back to Home</a>
+                    <p style="color:red;">Apabila Belum Memiliki Akun Silahkan Hubungi Admin</P>
                   </div>
                 </div>
               </div>

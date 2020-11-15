@@ -96,7 +96,8 @@ class BarangMasuk extends CI_Controller {
         }
     }
 
-            public function hapusDataBarang($id) {
+    public function hapusDataBarang($id) 
+    {
                 $where = array('id_barang_masuk' => $id);
                 $this->load->model('barang_masuk_model');
             $res = $this->barang_masuk_model->DeleteData('barang_masuk',$where);
@@ -116,7 +117,18 @@ class BarangMasuk extends CI_Controller {
 				redirect('barangmasuk');
 			}
 
-	}
+    }
+    
+    public function cetakDataBarang($id_barang_masuk)
+    {
+        //Ambil Data Admin
+        $this->load->model('User_model','user');
+        $data['user'] = $this->user->GetUser($this->session->userdata('username'));
+        //Ambil Data Barang
+        $this->load->model('barang_masuk_model','barang_masuk');
+        $data['barang_masuk'] = $this->barang_masuk->getDataBarangMasukById($id_barang_masuk);
+        $this->load->view('admin/pengaturanBarangMasuk/cetak',$data);
+    }
     
 
 
