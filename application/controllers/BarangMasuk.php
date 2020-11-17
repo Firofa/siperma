@@ -43,7 +43,8 @@ class BarangMasuk extends CI_Controller {
                 'total_harga' => htmlspecialchars($this->input->post('total_harga'),true),
                 'nota_barang_masuk' =>htmlspecialchars($this->input->post('nota_barang_masuk'),true),
                 'created_at' => time(),
-                'updated_at' => time()
+                'updated_at' => time(),
+                'is_deleted' => "No"
             ];
             
             $this->db->insert('barang_masuk',$data);
@@ -98,10 +99,18 @@ class BarangMasuk extends CI_Controller {
 
     public function hapusDataBarang($id) 
     {
+                $data = [
+                    'is_deleted' => "Yes"
+                ];
                 $where = array('id_barang_masuk' => $id);
-                $this->load->model('barang_masuk_model');
-            $res = $this->barang_masuk_model->DeleteData('barang_masuk',$where);
-            if($res >= 1) {
+                //Mengupdate permintaan yang belum divalidasi
+                $this->load->model('permintaan_model','permintaan');
+                $id_barang = $id;
+                $this->permintaan->updateAllPendingDataByIdBarang($id_barang);
+                //Menghapus Barang Masuk
+                $this->load->model('barang_masuk_model','barang_masuk');
+                $result = $this->barang_masuk->UpdateDataBarangMasuk('barang_masuk',$data,$where);
+            if($result >= 1) {
 				$this->session->set_flashdata('message', 
 				'<div class="alert alert-dismissible alert-success">
   						<button type="button" class="close" data-dismiss="alert">&times;</button>

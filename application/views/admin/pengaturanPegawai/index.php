@@ -78,7 +78,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <?= form_open_multipart('admin/pengaturanAkses'); ?>
+      <?= form_open_multipart('admin/pengaturanPegawai'); ?>
       <div class="modal-body">
       <div class="form-group">
                     <label>Nama Pengguna:</label>

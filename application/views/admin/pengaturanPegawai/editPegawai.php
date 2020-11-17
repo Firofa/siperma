@@ -68,6 +68,16 @@
                   </select>
                     <?= form_error('ruangan_id','<small class="text-danger pl-3">','</small>'); ?> 
                 </div>
+                <div class="form-group row">
+                  <label for="is_active">Status:</label>
+                  <select class="form-control" id="is_active" name="is_active">
+                      <option disabled>Pilih ruangan:</option>
+                      <option value="<?= $edit_user['is_active'];?>">Status saat ini: <?php if($edit_user['is_active'] == 1){ echo "Aktif"; } else { echo "Tidak Aktif"; } ?></option>
+                      <option value="1">Aktif</option>
+                      <option value="0">Tidak Aktif</option>
+                  </select>
+                    <?= form_error('is_active','<small class="text-danger pl-3">','</small>'); ?> 
+                </div>
                 
 
 				<div class="form-group row justify-content-end">

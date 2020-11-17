@@ -93,6 +93,11 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Petunjuk Penggunaan</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('admin/changepassword');?>">
+          <i class="fas fa-fw fa-user"></i>
+          <span>Change Password</span></a>
+      </li>
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">

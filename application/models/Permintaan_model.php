@@ -63,5 +63,16 @@ class Permintaan_model extends CI_Model {
                                 );
         return $data->row_array();
     }
+
+    public function updateAllPendingDataByIdBarang($id_barang) {
+        $data = [
+            'status_permintaan' => 'Barang Tidak Ada'
+        ];
+        $where = [
+            "barang_id = ".$id_barang,
+            'status_permintaan' => 'Pending'
+        ];
+        return $this->db->update('permintaan_barang',$data,$where);
+    }
 }
 ?>

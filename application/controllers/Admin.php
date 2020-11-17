@@ -129,6 +129,7 @@ class Admin extends CI_Controller {
 		$tahun = $_POST['tahun'];
 		$work_unit_id = $_POST['work_unit_id'];
 		$ruangan_id = $_POST['ruangan_id'];
+		$is_active = $_POST['is_active'];
 
 		$data = [
 			'name' => $name,
@@ -138,6 +139,7 @@ class Admin extends CI_Controller {
 			'tahun' => $tahun,
 			'work_unit_id' => $work_unit_id,
 			'ruangan_id' => $ruangan_id,
+			'is_active' => $is_active,
 			'updated_at' => time()
 		];
 		$where = ['id_users' => $id_users];
@@ -217,6 +219,62 @@ class Admin extends CI_Controller {
 				</div>');
 				redirect('admin/editHakAkses/'.$id_users);
 			}
+	}
+
+	public function changepassword() {
+		$data['title'] = "Change Password";
+		$data['user'] = $this->db->get_where('users', [
+			'username' => $this->session->userdata('username')])->row_array();
+
+		$this->form_validation->set_rules('currentPassword','Current password','required|trim');
+		$this->form_validation->set_rules('new_password1', 'New password', 'required|trim|min_length[8]|matches[new_password2]' , [
+					'matches' => 'Password dont match!',
+					'min_length' => 'Password too short!',
+			]);
+		$this->form_validation->set_rules('new_password2', 'Confirm new password', 'required|trim|matches[new_password1]');
+
+		if ($this->form_validation->run() == false) {
+			
+		$this->load->view('templates/admin_header',$data);
+		$this->load->view('templates/admin_navbar',$data);
+		$this->load->view('admin/ubahpassword',$data);
+		$this->load->view('templates/admin_footer');
+		
+		} else {
+
+		$currentPassword = $this->input->post('currentPassword');
+		$newPassword = $this->input->post('new_password1');
+		if(!password_verify($currentPassword, $data['user']['password'])) {
+			$this->session->set_flashdata('message', 
+				'<div class="alert alert-dismissible alert-danger">
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						<strong>Oops!</strong> Password Lama Salah!
+				</div>');
+			redirect('admin/changepassword');
+		} else {
+			if($currentPassword	== $newPassword) {
+				$this->session->set_flashdata('message', 
+				'<div class="alert alert-dismissible alert-warning">
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						<strong>Oops!</strong> Password Lama Dan Baru Tidak Boleh Sama!
+				</div>');
+				redirect('admin/changepassword');
+			} else {
+				$password_hash = password_hash($newPassword,PASSWORD_DEFAULT);
+				$this->db->set('password',$password_hash);
+				$this->db->where('username',$this->session->userdata('username'));
+				$this->db->update('users');
+
+				$this->session->set_flashdata('message', 
+				'<div class="alert alert-dismissible alert-success">
+  						<button type="button" class="close" data-dismiss="alert">&times;</button>
+  						<strong>Well Done!</strong> Password Berhasil Diubah!
+				</div>');
+			redirect('admin/changepassword');
+			}
+		}
+
+		}
 	}
 
 
