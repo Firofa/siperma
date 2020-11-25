@@ -50,6 +50,7 @@
                             <p><a href="<?= base_url('PermintaanBarang/cetak/').$p['id_permintaan_barang'];?>" target="_blank" class="badge badge-primary">Cetak Bukti</a></p>
                             <?php else: ?>
                             <p><a href="#" class="badge badge-secondary">Selesai</a></p>
+                            <p><a href="<?= base_url('PermintaanBarang/hapus/').$p['id_permintaan_barang'];?>" onclick="return confirm('Yakin ingin menghapus data?');" class="badge badge-warning">Hapus</a></p>
                             <?php endif; ?>
                         </td>
                         <td><p style="<?php if($p['status_permintaan'] == 'Disetujui') { echo 'color:green;'; } elseif($p['status_permintaan'] == 'Ditolak') { echo 'color:red;'; }?>"><?= $p['status_permintaan']; ?></p></td>

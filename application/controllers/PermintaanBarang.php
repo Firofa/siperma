@@ -75,6 +75,13 @@ class PermintaanBarang extends CI_Controller {
         $this->load->view('admin/pengaturanPermintaanBarang/cetak',$data);
     }
 
+    public function hapus($id_permintaan_barang) {
+        $this->db->delete('permintaan_barang', array('id_permintaan_barang' => $id_permintaan_barang));
+        $this->session->set_flashdata("message","<div class='alert alert-success' role='alert'>Permintaan Barang Berhasil Dihapus.</div>");
+        redirect('PermintaanBarang');
+
+    }
+
 
 }
 

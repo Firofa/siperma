@@ -38,7 +38,7 @@
               			<td>
                             <a href="<?= base_url('BarangMasuk/cetakDataBarang/').$bm['id_barang_masuk'];?>" target="_blank" class="badge badge-secondary">Cetak</a>
                             <a href="<?= base_url('BarangMasuk/editDataBarang/').$bm['id_barang_masuk'];?>" class="badge badge-success">Edit</a>
-                            <a href="<?= base_url('BarangMasuk/hapusDataBarang/').$bm['id_barang_masuk'];?>" class="badge badge-danger">Hapus</a>
+                            <a href="<?= base_url('BarangMasuk/hapusDataBarang/').$bm['id_barang_masuk'];?>" onclick="return confirm('Yakin ingin menghapus data?');"  class="badge badge-danger">Hapus</a>
                         </td>
                         
 				      <?php $i++; ?>
