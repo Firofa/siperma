@@ -74,5 +74,18 @@ class Permintaan_model extends CI_Model {
         ];
         return $this->db->update('permintaan_barang',$data,$where);
     }
+
+    public function GetPermintaanPending(){
+        $data = $this->db->query("SELECT `ruangan`.`ruangan`,`barang_masuk`.`nama_barang_masuk`,`users`.`name`,`permintaan_barang`.`status_permintaan`,`permintaan_barang`.`jumlah_permintaan`, `permintaan_barang`.`created_at` AS 'tanggal_permintaan' FROM `permintaan_barang`
+                                JOIN `users`
+                                ON `permintaan_barang`.`user_id` = `users`.`id_users`
+                                JOIN `barang_masuk`
+                                ON `permintaan_barang`.`barang_id` = `barang_masuk`.`id_barang_masuk`
+                                JOIN `ruangan`
+                                ON `ruangan`.`id_ruangan` = `users`.`ruangan_id`
+                                WHERE `status_permintaan` = 'Pending'
+                                ");
+        return $data->result_array();
+    }
 }
 ?>

@@ -130,5 +130,20 @@ class User extends CI_Controller {
 
 		}
 	}
+
+	public function lihatStokBarang() {
+		$data['title'] = "Lihat Stok Barang Page | SIPERMA";
+		$this->load->model('User_model','user');
+		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
+		$data['user']['menu'] = "lihatStokBarang";
+		//Ambil data Permintaan by User
+		$this->load->model('Barang_masuk_model','barang_masuk');
+		$data['barang'] = $this->barang_masuk->GetDataBarangMasuk();
+		//load view
+		$this->load->view('templates/user_header',$data);
+		$this->load->view('templates/user_navbar',$data);
+		$this->load->view('user/lihatStokBarang',$data);
+		$this->load->view('templates/user_footer');
+	}
 	
 }

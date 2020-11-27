@@ -23,6 +23,11 @@ class Laporan extends CI_Controller {
         //Mengambil data work unit
         $this->load->model('barang_masuk_model','barang_masuk');
         $data['barang_masuk'] = $this->barang_masuk->GetDataBarangMasuk();
+        //Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 		$this->load->view('admin/laporan/laporanBarangMasuk',$data);
     }
 
@@ -34,6 +39,11 @@ class Laporan extends CI_Controller {
         //Mengambil data work unit
         $this->load->model('permintaan_model','permintaan');
         $data['permintaan'] = $this->permintaan->GetAllDataPermintaanDetailValidateOnly();
+        //Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
         $this->load->view('admin/laporan/laporanBarangKeluar',$data);
     }
 

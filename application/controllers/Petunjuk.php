@@ -20,6 +20,11 @@ class Petunjuk extends CI_Controller {
 		//Ambil data user
 		$this->load->model('User_model','user');
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 			$this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/petunjuk/index',$data);

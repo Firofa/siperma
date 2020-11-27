@@ -23,6 +23,11 @@ class Ruangan extends CI_Controller {
             //Mengambil data ruangan
 		    $this->load->model('ruangan_model','ruangan');
             $data['ruangan'] = $this->ruangan->GetDataRuangan();
+            //Ambil data notifikasi permintaan barang
+            $this->load->model('permintaan_model','permintaan');
+            $data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+            $data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+            //End Ambil data notifikasi permintaan barang
             $this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/pengaturanRuangan/index',$data);
@@ -44,7 +49,12 @@ class Ruangan extends CI_Controller {
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
 		//Mengambil data ruangan yang di edit
 		$this->load->model('ruangan_model','ruangan');
-		$data['ruangan'] = $this->ruangan->GetEditDataRuangan($id_ruangan);
+        $data['ruangan'] = $this->ruangan->GetEditDataRuangan($id_ruangan);
+        //Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 		$this->load->view('templates/admin_header',$data);
 		$this->load->view('templates/admin_navbar',$data);
 		$this->load->view('admin/pengaturanRuangan/editRuangan',$data);

@@ -23,6 +23,10 @@ class PermintaanBarang extends CI_Controller {
         //Mengambil data work unit
         $this->load->model('permintaan_model','permintaan');
         $data['permintaan'] = $this->permintaan->GetAllDataPermintaanDetail();
+        //Ambil data notifikasi permintaan barang
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
         $this->load->view('templates/admin_header',$data);
         $this->load->view('templates/admin_navbar',$data);
         $this->load->view('admin/pengaturanPermintaanBarang/index',$data);

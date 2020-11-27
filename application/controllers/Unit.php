@@ -10,7 +10,7 @@ class Unit extends CI_Controller {
 		if($role !== "1" && $role !== "2") {
 			redirect();
 		} 
-		$this->load->library('form_validation');
+        $this->load->library('form_validation');
     }
 
     public function index() {
@@ -29,7 +29,12 @@ class Unit extends CI_Controller {
             $data['user'] = $this->user->GetUser($this->session->userdata('username'));
             //Mengambil data work unit
 		    $this->load->model('work_unit_model','work_unit');
-		    $data['unit'] = $this->work_unit->GetDataWorkUnit();
+            $data['unit'] = $this->work_unit->GetDataWorkUnit();
+            //Ambil data notifikasi permintaan barang
+            $this->load->model('permintaan_model','permintaan');
+            $data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+            $data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+            //End Ambil data notifikasi permintaan barang
             $this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/pengaturanUnit/index',$data);
@@ -76,7 +81,12 @@ class Unit extends CI_Controller {
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
 		//Mengambil data work unit yang di edit
 		$this->load->model('work_unit_model','unit');
-		$data['unit'] = $this->unit->GetEditDataWorkUnit($id_work_unit);
+        $data['unit'] = $this->unit->GetEditDataWorkUnit($id_work_unit);
+        //Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 		$this->load->view('templates/admin_header',$data);
 		$this->load->view('templates/admin_navbar',$data);
 		$this->load->view('admin/pengaturanUnit/editUnit',$data);

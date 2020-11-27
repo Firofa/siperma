@@ -11,8 +11,9 @@ class Admin extends CI_Controller {
 		if($role !== "1" && $role !== "2") {
 			redirect();
 		} 
-		$this->load->library('form_validation');
 		
+		$this->load->library('form_validation');
+
 	}
 
 	public function index()
@@ -21,6 +22,11 @@ class Admin extends CI_Controller {
 		//Ambil data user
 		$this->load->model('User_model','user');
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 			$this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/index',$data);
@@ -73,6 +79,11 @@ class Admin extends CI_Controller {
 		//Mengambil data work unit
 		$this->load->model('work_unit_model','work_unit');
 		$data['work_unit'] = $this->work_unit->GetDataWorkUnit();
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 			$this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/pengaturanPegawai/index',$data);
@@ -114,6 +125,11 @@ class Admin extends CI_Controller {
 		$data['work_unit'] = $this->work_unit->GetDataWorkUnit();
 		// Ambil data user yang akan di edit
 		$data['edit_user'] = $this->user->GetDetailUser($id_user);
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 		$this->load->view('templates/admin_header',$data);
 		$this->load->view('templates/admin_navbar',$data);
 		$this->load->view('admin/pengaturanPegawai/editPegawai',$data);
@@ -169,6 +185,11 @@ class Admin extends CI_Controller {
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
 		//Ambil Seluruh data pengguna
 		$data['pengguna'] = $this->user->getDetailDataUsers();
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 			$this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/pengaturanHakAkses/index',$data);
@@ -185,6 +206,11 @@ class Admin extends CI_Controller {
 		$data['level_akses'] = $this->level_akses->GetDataLevel();
 		// Ambil data user yang akan di edit
 		$data['edit_user'] = $this->user->GetDetailUser($id_users);
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 		$this->load->view('templates/admin_header',$data);
 		$this->load->view('templates/admin_navbar',$data);
 		$this->load->view('admin/pengaturanHakAkses/editHakAkses',$data);
@@ -225,6 +251,11 @@ class Admin extends CI_Controller {
 		$data['title'] = "Change Password";
 		$data['user'] = $this->db->get_where('users', [
 			'username' => $this->session->userdata('username')])->row_array();
+		//Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 
 		$this->form_validation->set_rules('currentPassword','Current password','required|trim');
 		$this->form_validation->set_rules('new_password1', 'New password', 'required|trim|min_length[8]|matches[new_password2]' , [
@@ -232,9 +263,9 @@ class Admin extends CI_Controller {
 					'min_length' => 'Password too short!',
 			]);
 		$this->form_validation->set_rules('new_password2', 'Confirm new password', 'required|trim|matches[new_password1]');
-
+		
 		if ($this->form_validation->run() == false) {
-			
+		
 		$this->load->view('templates/admin_header',$data);
 		$this->load->view('templates/admin_navbar',$data);
 		$this->load->view('admin/ubahpassword',$data);

@@ -121,7 +121,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-  <a class="nav-link" href="charts.html">
+  <a class="nav-link" href="<?= base_url('petunjuk');?>">
     <i class="fas fa-fw fa-chart-area"></i>
     <span>Petunjuk Penggunaan</span></a>
 </li>
@@ -164,8 +164,47 @@
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
+      <!-- Nav Item - Alerts -->
+      <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter"><?php echo $notifikasiCount > 0 ? $notifikasiCount : ""; ?></span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Notifikasi Permintaan Barang
+                </h6>
+                <?php if($notifikasiCount < 1) :?>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">Tidak ada permintaan baru.</span>
+                  </div>
+                </a>
+                <?php else : ?>
+                <?php foreach($notifikasiPermintaan as $np) : ?>
+                <a class="dropdown-item d-flex align-items-center" href="<?= base_url('PermintaanBarang'); ?>">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"><?= date('d M Y',$np['tanggal_permintaan']); ?></div>
+                    <span class="font-weight-bold">Permintaan belum divalidasi.</span>
+                    <span>Dari: <?= $np['name']; ?></span><br / >
+                    <span>Permintaan: <?= $np['nama_barang_masuk']; ?></span><br />
+                    <span>Jumlah: <?= $np['jumlah_permintaan']; ?></span>
+                  </div>
+                </a>
+                <?php endforeach; ?>
+                <?php endif; ?>
+              </div>
+            </li>
       <div class="topbar-divider d-none d-sm-block"></div>
-
       <!-- Nav Item - User Information -->
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

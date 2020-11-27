@@ -21,9 +21,9 @@
 				      	<th scope="col">No</th>
 				      	<th scope="col">Nama Barang Masuk</th>
 				      	<th scope="col">Jumlah Barang Masuk</th>
-                        <th scope="col">Harga Satuan Barang</th>
-                        <th scope="col">Tanggal</th>
-                        <th scope="col">Pilihan</th>
+                <th scope="col">Harga Satuan Barang</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Pilihan</th>
 				    </tr>
 				  </thead>
 				  <tbody>

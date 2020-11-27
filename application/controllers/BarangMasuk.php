@@ -30,7 +30,12 @@ class BarangMasuk extends CI_Controller {
             $data['user'] = $this->user->GetUser($this->session->userdata('username'));
             //Mengambil data work unit
 		    $this->load->model('barang_masuk_model','barang_masuk');
-		    $data['barang_masuk'] = $this->barang_masuk->GetDataBarangMasuk();
+            $data['barang_masuk'] = $this->barang_masuk->GetDataBarangMasuk();
+            //Ambil data notifikasi permintaan barang
+            $this->load->model('permintaan_model','permintaan');
+            $data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+            $data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+            //End Ambil data notifikasi permintaan barang
             $this->load->view('templates/admin_header',$data);
 			$this->load->view('templates/admin_navbar',$data);
 			$this->load->view('admin/pengaturanBarangMasuk/index',$data);
@@ -60,7 +65,12 @@ class BarangMasuk extends CI_Controller {
 		$data['user'] = $this->user->GetUser($this->session->userdata('username'));
 		//Mengambil data ruangan yang di edit
 		$this->load->model('barang_masuk_model','barang_masuk');
-		$data['barang_masuk'] = $this->barang_masuk->GetEditDataBarangMasuk($id_barang_masuk);
+        $data['barang_masuk'] = $this->barang_masuk->GetEditDataBarangMasuk($id_barang_masuk);
+        //Ambil data notifikasi permintaan barang
+		$this->load->model('permintaan_model','permintaan');
+		$data['notifikasiPermintaan'] = $this->permintaan->GetPermintaanPending();
+		$data['notifikasiCount'] = count($data['notifikasiPermintaan']);
+		//End Ambil data notifikasi permintaan barang
 		$this->load->view('templates/admin_header',$data);
 		$this->load->view('templates/admin_navbar',$data);
 		$this->load->view('admin/pengaturanBarangMasuk/editBarangMasuk',$data);
