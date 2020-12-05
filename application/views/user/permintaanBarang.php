@@ -226,7 +226,7 @@
   $('.barang_id').each(function(){
    count_data = count_data + 1;
   });
-  if(count_data >= 0)
+  if(count_data > 0)
   {
    var form_data = $(this).serialize();
    $.ajax({
