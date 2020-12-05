@@ -37,7 +37,7 @@
                       <input type="text" class="form-control" id="ruangan"  name="ruangan" value="<?= $user['ruangan'];?>" READONLY>
                   </div>
                 <div align="left" style="margin-bottom:5px;">
-                    <button type="button" name="add" id="add" class="btn btn-success">Tambah Permintaan Barang</button>
+                    <button type="button" name="add" id="add" class="btn btn-success">Tambah Penghasilan</button>
                     <br />
                     <br />
                   <div class="table-responsive">
@@ -226,7 +226,7 @@
   $('.barang_id').each(function(){
    count_data = count_data + 1;
   });
-  if(count_data > 0)
+  if(count_data >= 0)
   {
    var form_data = $(this).serialize();
    $.ajax({

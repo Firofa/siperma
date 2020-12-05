@@ -52,8 +52,7 @@ class User extends CI_Controller {
 				'barang_id' => $a[$count],
 				'periode_permintaan' => $this->input->post('periode_permintaan'),
 				'jumlah_permintaan' => $_POST['hidden_jumlah_permintaan'][$count],
-				'created_at' => time(),
-				'status_permintaan' => 'Pending'
+				'created_at' => time()
 			);
 		$this->db->insert('permintaan_barang',$data);
 
